@@ -11,9 +11,16 @@ var connection = mysql.createConnection({
     database: "need to make"
 });
 
-
-connection.connect(function (err) {
-    if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
-    askQuestions();
+//connection
+connection.connect((err) => {
+  if (err) throw err;
+  runSearch();
 });
+
+const runSearch = () => {
+    inquirer
+        .prompt({
+
+        })
+
+}
