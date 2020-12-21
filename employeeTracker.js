@@ -90,19 +90,41 @@ const viewDepartments = () => {
 }
 
 const addEmployee = () => {
-    connection.query("SELECT * FROM roles", function (err, data) {
+    connection.query("SELECT * FROM role", function (err, data) {
       if (err) throw err;
   
   inquirer
     .prompt({
       name: "firstName",
-      type: 'input',
-      message: 'What is employees first name?',
+      type: "input",
+      message: "What's employee's first name?",
 
-  }).then((answer) => {
+  },
+  {
+      name: "lastName",
+      type: "input",
+      message: "What's employee's last name?",
+  },
+  {
+      type: "number",
+      name: "roleId",
+      message: "What's employee's role ID"
+  },
+  {
+      type: "number",
+      name: "managerId",
+      message: "What's employee's manager's ID?"
+  },
+  
+  ).then((answer) => {
     console.log(answer)
+    let query = "INSERT INTO employee VALUES (?, ?, ?, ?)";
     //filter method - filter.this
-
+    connection.query(query, answer.firstName, answer.lastName, answer.roleId, answer.managerId, function(err, data) {
+         if (err) throw err;
+            console.table("Added successfully");
+            runSearch();
+    })
   })
 
 })
@@ -118,7 +140,7 @@ const addDepartment = () => {
   }).then((answer) => {
     console.log(answer)
     let query = "INSERT INTO department (name) VALUES (?)";
-    connection.query(query, answer.department, function(err, res) {
+    connection.query(query, answer.department, function(err, data) {
       console.log(`${(answer.department)} was added`)
     })
   viewDepartments();
@@ -127,21 +149,58 @@ const addDepartment = () => {
 }
 
 const addRole = () => {
-    connection.query("SELECT * FROM roles", function (err, data) {
+    connection.query("SELECT * FROM department", function (err, data) {
       if (err) throw err;
   
   inquirer
     .prompt({
-      name: "firstName",
-      type: 'input',
-      message: 'What is employees first name?',
-
-  })
+        message: "enter the title:",
+        type: "input",
+        name: "title"
+    }, {
+        message: "enter it's salary:",
+        type: "number",
+        name: "salary"
+    }, {
+        message: "enter the department ID:",
+        type: "number",
+        name: "department_id"
+    })
   .then((answer) => {
-    console.log(answer)
-    //filter method - filter.this
+    let query = "INSERT INTO role VALUES (?, ?, ?)";
+    connection.query(query, answer.title, answer.salary, answer.department_id, function(err, data) {
+         if (err) throw err;
+            console.table("Added successfully");
+            runSearch();
+
+    
+    })
 
   })
 
 })
 }
+
+const updateEmployeeRole = () => {
+    inquirer
+    .prompt({
+      message: "which employee file needs to be updated",
+      type: "input",
+      name: "name"
+    }, {
+      message: "enter the new role Id:",
+      type: "number",
+      name: "role_id"
+   })
+  .then((answer) => {
+     let query = "UPDATE employee SET role_id = ? WHERE first_name = ?";
+      connection.query(query, answer.title, answer.salary, answer.department_id, function(err, data) {
+        if (err) throw err;
+          console.table("Added successfully");
+          runSearch();
+    })
+ })
+
+}
+
+

@@ -8,7 +8,6 @@
 
       Employee tracker us an application tfor building and maintianing a companies database.  It will be using MySQL and Inquirer to prompt questions and build a database.  You will need to use Node to start the application but an employee or manager should be able to add, update and create departments, employees and manager files.  There will also be a capability to add roles as well.
 
-
 ## Table of Contents:
 
 - [Installation](#Install)
@@ -23,7 +22,7 @@
 
   ## Install:
 
-      npmi, npm install mysql inquirer express
+      npm i, npm install mysql inquirer express
 
   ### The application will be invoked by using the following command: {#projectUsage}
 
