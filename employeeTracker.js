@@ -119,8 +119,9 @@ const addEmployee = () => {
   
 ]).then((answer) => {
     let query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+    let values = [answer.firstName, answer.lastName, answer.roleId, answer.managerId]
     //filter method - filter.this
-    connection.query(query, answer.firstName, answer.lastName, answer.roleId, answer.managerId, function(err, data) {
+    connection.query(query, values, function(err, data) {
          if (err) throw err;
             console.log("Added successfully");
     })
@@ -139,7 +140,8 @@ const addDepartment = () => {
   }).then((answer) => {
     console.log(answer)
     let query = "INSERT INTO department (name) VALUES (?)";
-    connection.query(query, answer.department, function(err, data) {
+    let values = [answer.department]
+    connection.query(query, values, function(err, data) {
       console.log(`${(answer.department)} was added`)
     })
   viewDepartments();
@@ -168,7 +170,8 @@ const addRole = () => {
     }
   ]).then((answer) => {
     let query = "INSERT INTO role VALUES (?, ?, ?)";
-    connection.query(query, answer.title, answer.salary, answer.department_id, function(err, data) {
+    let values = [answer.title, answer.salary, answer.department_id]
+    connection.query(query, values, function(err, data) {
          if (err) throw err;
             console.log("Added successfully");
             runSearch();
@@ -181,7 +184,8 @@ addRole()
 
 const updateEmployeeRole = () => {
     inquirer
-    .prompt({
+    .prompt([
+    {
       message: "which employee file needs to be updated",
       type: "input",
       name: "name"
@@ -189,8 +193,8 @@ const updateEmployeeRole = () => {
       message: "enter the new role Id:",
       type: "number",
       name: "role_id"
-   })
-  .then((answer) => {
+   }
+  ]).then((answer) => {
      let query = "UPDATE employee SET role_id = ? WHERE first_name = ?";
       connection.query(query, answer.title, answer.salary, answer.department_id, function(err, data) {
         if (err) throw err;
