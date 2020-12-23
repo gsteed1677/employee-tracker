@@ -194,7 +194,7 @@ const updateEmployeeRole = () => {
    }
   ]).then((answer) => {
      let query = "UPDATE employee SET role_id = ? WHERE first_name = ?";
-     let values = [answer.title, answer.salary, answer.department_id,]
+     let values = [answer.role_id, answer.name,]
       connection.query(query, values, function(err, data) {
         if (err) throw err;
           console.log("Added successfully");
