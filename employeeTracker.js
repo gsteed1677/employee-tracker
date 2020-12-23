@@ -94,7 +94,8 @@ const addEmployee = () => {
       if (err) throw err;
   
   inquirer
-    .prompt({
+    .prompt([
+  {
       name: "firstName",
       type: "input",
       message: "What's employee's first name?",
@@ -116,7 +117,7 @@ const addEmployee = () => {
       message: "What's employee's manager's ID?"
   },
   
-  ).then((answer) => {
+]).then((answer) => {
     let query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
     //filter method - filter.this
     connection.query(query, answer.firstName, answer.lastName, answer.roleId, answer.managerId, function(err, data) {
@@ -151,7 +152,8 @@ const addRole = () => {
       if (err) throw err;
   
   inquirer
-    .prompt({
+    .prompt([
+    {
         message: "Enter the title:",
         type: "input",
         name: "title"
@@ -163,8 +165,8 @@ const addRole = () => {
         message: "Enter the department ID:",
         type: "number",
         name: "department_id"
-    })
-  .then((answer) => {
+    }
+  ]).then((answer) => {
     let query = "INSERT INTO role VALUES (?, ?, ?)";
     connection.query(query, answer.title, answer.salary, answer.department_id, function(err, data) {
          if (err) throw err;
