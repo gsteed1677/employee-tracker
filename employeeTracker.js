@@ -173,12 +173,10 @@ const addRole = () => {
     let values = [answer.title, answer.salary, answer.department_id]
     connection.query(query, values, function(err, data) {
          if (err) throw err;
-            console.log("Added successfully");
+            console.log(`${(answer.role)} was added`);
             runSearch();
     })
-
   })
-addRole()
 })
 }
 
@@ -196,7 +194,8 @@ const updateEmployeeRole = () => {
    }
   ]).then((answer) => {
      let query = "UPDATE employee SET role_id = ? WHERE first_name = ?";
-      connection.query(query, answer.title, answer.salary, answer.department_id, function(err, data) {
+     let values = [answer.title, answer.salary, answer.department_id,]
+      connection.query(query, values, function(err, data) {
         if (err) throw err;
           console.log("Added successfully");
           runSearch();
